@@ -1,4 +1,9 @@
-# Homework 5
+# Homework 5: Effect of SARS-CoV-2 on the host organism
+
+We will learn about the basics of gene expression data analysis. Biologists have found a way to measure how much each gene is *expressed* in each cell in an experiment. We do this by counting the number of mRNA molecules in each cell. Remember, DNA holds instructions for building proteins but can't be turned into proteins directly. Translation of DNA creates mRNA molecules which ribosomes read to synthesize proteins.
+If we measure the amount of mRNA in a cell, we can tell what proteins the cell is making and, indirectly, what the cell is doing as a whole.
+
+Open `homework-5.ipynb` to get started.
 
 ## Submission and Grading
 
@@ -25,9 +30,9 @@ We will automatically fetch your solutions at the deadline and these submissions
 
 ## Environment instructions
 
-You will need Python 3.8 or higher. You will need to install `biopython` for accessing NCBI and `matplotlib` for plotting. You will also need `jupyterlab` to open and run the notebook. You will also need `numpy`, `scipy`, `pandas`, `scanpy`, and `seaborn`. You can install everything necessary by running
+You will need Python 3.8 or higher. You will need to install `biopython` for accessing NCBI and `matplotlib` for plotting. You will also need `jupyterlab` to open and run the notebook. You will also need `numpy`, `scipy`, `pandas`, `scanpy`, `statsmodels` and `seaborn`. You can install everything necessary by running
 ```
-pip install biopython matplotlib jupyterlab pandas scanpy
+pip install biopython matplotlib jupyterlab pandas scanpy statsmodels scipy
 ```
 Please do not use any other libraries, because they will not be installed in the automatic grader environment and will fail, resulting in zero points. If you think some other library absolutely needs to be included, please reach out on Slack and we will discuss it there.
 
