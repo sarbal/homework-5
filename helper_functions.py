@@ -1,7 +1,6 @@
 from collections import namedtuple
 from typing import Dict, List, Tuple
 import pandas as pd
-from Bio.SeqRecord import SeqRecord
 
 GffEntry = namedtuple(
     "GffEntry",
@@ -108,10 +107,7 @@ def map_read_to_gene(read: str, ref_seq: str, genes: GeneDict) -> Tuple[str, flo
 
 
 def generate_count_matrix(
-    reads: str,
-    ref_seq: str,
-    genes: GeneDict,
-    similarity_threshold: float
+    reads: List[str], ref_seq: str, genes: GeneDict, similarity_threshold: float
 ) -> pd.DataFrame:
     """
 
@@ -141,8 +137,8 @@ def generate_count_matrix(
 
 def filter_matrix(
     count_matrix: pd.DataFrame,
-    min_counts_per_cell: int,
-    min_counts_per_gene: int,
+    min_counts_per_cell: float,
+    min_counts_per_gene: float,
 ) -> pd.DataFrame:
     """Filter a matrix by cell counts and gene counts.
     The cell count is the total number of molecules sequenced for a particular
@@ -161,5 +157,51 @@ def filter_matrix(
     -------
     filtered_count_matrix: pd.DataFrame
 
+    """
+    raise NotImplementedError()
+
+
+def normalize_expressions(expression_data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Normalize expressions by applying natural log-transformation with pseudo count 1,
+    and scaling expressions of each sample to sum up to 10000.
+
+    Parameters
+    ----------
+    expression_data: pd.DataFrame
+        Expression matrix with cells as rows and genes as columns.
+
+    Returns
+    -------
+    normalized_data: pd.DataFrame
+        Normalized expression matrix with cells as rows and genes as columns.
+        Matrix should have the same shape as the input matrix.
+        Matrix should have the same index and column labels as the input matrix.
+        Order of rows and columns should remain the same.
+        Values in the matrix should be positive or zero.
+    """
+    raise NotImplementedError()
+
+
+def hypergeometric_pval(N: int, n: int, K: int, k: int) -> float:
+    """
+    Calculate the p-value using the following hypergeometric distribution.
+
+    Parameters
+    ----------
+    N: int
+        Total number of genes in the study (gene expression matrix)
+    n: int
+        Number of genes in your proposed gene set (e.g. from differential expression)
+    K: int
+        Number of genes in an annotated gene set (e.g. GO gene set)
+    k: int
+        Number of genes in both annotated and proposed geneset
+
+    Returns
+    -------
+    p_value: float
+        p-value from hypergeometric distribution of finding such or
+        more extreme match at random
     """
     raise NotImplementedError()

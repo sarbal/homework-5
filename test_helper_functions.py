@@ -3,15 +3,18 @@ import unittest
 import pandas as pd
 import numpy as np
 from helper_functions import (
-    GffEntry, split_read, map_read_to_gene, generate_count_matrix, filter_matrix
+    GffEntry,
+    split_read,
+    map_read_to_gene,
+    generate_count_matrix,
+    filter_matrix,
+    normalize_expressions,
 )
 
 
 class TestSplitGene(unittest.TestCase):
     def test_split_gene(self):
-        read = (
-            "AATTTTCACGGTTTTTTTTTTTTTTTTTTTTTTTTTACTTTGTAAGAATAATAATGAGGCTTTGGC"
-        )
+        read = "AATTTTCACGGTTTTTTTTTTTTTTTTTTTTTTTTTACTTTGTAAGAATAATAATGAGGCTTTGGC"
 
         result = split_read(read)
         self.assertEqual(len(result), 2)
@@ -90,28 +93,32 @@ class TestFilterMatrix(unittest.TestCase):
         mtx = pd.DataFrame(
             index=[1, 2, 3, 4, 5, 6, 7],
             columns=["A", "B", "C", "D", "E"],
-            data=np.array([
-                [2, 1, 0, 1, 0],
-                [0, 2, 2, 0, 0],
-                [3, 2, 0, 0, 0],
-                [0, 0, 0, 0, 0],
-                [0, 1, 0, 0, 0],
-                [1, 3, 0, 0, 0],
-                [5, 3, 0, 0, 0],
-            ]),
+            data=np.array(
+                [
+                    [2, 1, 0, 1, 0],
+                    [0, 2, 2, 0, 0],
+                    [3, 2, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 1, 0, 0, 0],
+                    [1, 3, 0, 0, 0],
+                    [5, 3, 0, 0, 0],
+                ]
+            ),
         )
         min_gene_count = 2
         min_cell_count = 2
         expected = pd.DataFrame(
             index=[1, 2, 3, 6, 7],
             columns=["A", "B", "C"],
-            data=np.array([
-                [2, 1, 0],
-                [0, 2, 2],
-                [3, 2, 0],
-                [1, 3, 0],
-                [5, 3, 0],
-            ]),
+            data=np.array(
+                [
+                    [2, 1, 0],
+                    [0, 2, 2],
+                    [3, 2, 0],
+                    [1, 3, 0],
+                    [5, 3, 0],
+                ]
+            ),
         )
 
         filtered_mtx = filter_matrix(
@@ -126,6 +133,37 @@ class TestFilterMatrix(unittest.TestCase):
         np.testing.assert_almost_equal(filtered_mtx.values, expected.values)
         self.assertTrue(all(expected.index == filtered_mtx.index))
         self.assertTrue(all(expected.columns == filtered_mtx.columns))
+
+
+class TestNormalizeExpressions(unittest.TestCase):
+    def test_normalize_expressions(self):
+
+        mtx = pd.DataFrame(
+            index=np.array([1, 2, 3]),
+            columns=np.array(["A", "B", "C", "D"]),
+            data=np.array(
+                [
+                    [0, np.e - 1, np.e ** 2 - 1, np.e ** 7 - 1],
+                    [1, 1, 1, 1],
+                    [1, 0, 0, 0],
+                ]
+            ),
+        )
+        expected = pd.DataFrame(
+            index=[1, 2, 3],
+            columns=["A", "B", "C", "D"],
+            data=np.array(
+                [
+                    [0, 1000, 2000, 7000],
+                    [2500, 2500, 2500, 2500],
+                    [10000, 0, 0, 0],
+                ]
+            ),
+        )
+
+        norm_mtx = normalize_expressions(mtx)
+
+        np.testing.assert_equal(norm_mtx.values, expected)
 
 
 if __name__ == "__main__":
