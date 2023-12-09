@@ -79,29 +79,37 @@ def split_read(read: str) -> Tuple[str, str]:
 
 
 def map_read_to_gene(read: str, ref_seq: str, genes: GeneDict) -> Tuple[str, float]:
-    """Map a given read to a gene with a confidence score using Hamming distance.
+    """
+    Align a DNA sequence (read) against a reference sequence, and map it to the best matching gene.
+
+    This function takes a DNA sequence, aligns it to a given reference sequence,
+    and determines the best matching gene from a provided gene dictionary.
+    It uses local alignment and computes the Hamming distance to evaluate the similarity of the read to gene sequences.
+    The function returns the name of the best matching gene and the similarity score.
+    You can use 'pairwise2.align.localxs(ref_seq, read, -1, -1)' to perform local alignment.
 
     Parameters
     ----------
     read: str
-        The DNA sequence to be aligned to the reference sequence. This should
-        NOT include the cell barcode or the oligo-dT primer.
+        The DNA sequence to be aligned. This sequence should not include the cell barcode or the oligo-dT primer. It represents the mRNA fragment obtained from sequencing.
     ref_seq: str
-        The reference sequence that the read should be aligned against.
+        The complete reference sequence (e.g., a viral genome) against which the read will be aligned. This sequence acts as a basis for comparison.
     genes: GeneDict
+        A dictionary where keys are gene names and values are objects or tuples containing gene start and end positions in the reference sequence. This dictionary is used to identify specific genes within the reference sequence.
 
     Returns
     -------
-    gene: str
-        The name of the gene (using the keys of the `genes` parameter, which the
-        read maps to best. If the best alignment maps to a region that is not a
-        gene, the function should return `None`.
-    similarity: float
-        The similarity of the aligned read. This is computed by taking the
-        Hamming distance between the aligned read and the reference sequence.
-        E.g. catac and cat-x will have similarity 3/5=0.6.
+    Tuple[str, float]
+        - gene: str
+            The name of the gene to which the read maps best. If the read aligns best to a non-gene region, return `None`.
+        - similarity: float
+            The similarity score between the read and the best matching gene sequence, calculated as the Hamming distance. This is a measure of how closely the read matches a gene, with higher values indicating better matches.
 
-
+    Notes
+    -----
+    - The function performs local alignment of the read against the reference sequence and each gene segment.
+    - If the read aligns better to a region outside of any gene, the function should return `None` for the gene name.
+    - The function should handle cases where no alignment is found.
     """
     raise NotImplementedError()
 
@@ -143,7 +151,8 @@ def filter_matrix(
     """Filter a matrix by cell counts and gene counts.
     The cell count is the total number of molecules sequenced for a particular
     cell. The gene count is the total number of molecules sequenced that
-    correspond to a particular gene. Filtering statistics should be computed on
+    correspond to a particular gene.
+    Filtering statistics should be computed on
     the original matrix. E.g. if you filter out the genes first, the filtered
     gene molecules should still count towards the cell counts.
 
