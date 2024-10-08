@@ -1,9 +1,19 @@
-# Homework 5: Effect of SARS-CoV-2 on the host organism
+# Homework 5: The immune response
 
 We will learn about the basics of gene expression data analysis. Biologists have found a way to measure how much each gene is *expressed* in each cell in an experiment. We do this by counting the number of mRNA molecules in each cell. Remember, DNA holds instructions for building proteins but can't be turned into proteins directly. Translation of DNA creates mRNA molecules which ribosomes read to synthesize proteins.
 If we measure the amount of mRNA in a cell, we can tell what proteins the cell is making and, indirectly, what the cell is doing as a whole.
 
 Open `homework-5.ipynb` to get started.
+
+## Consent Form for Participation in Automated Grading Study
+
+We are conducting a study on the use of large language models (LLMs) to help grade homework assignments. Your homework will either be graded by an LLM or a human TA, chosen at random. You will not know which method was used. You may request a human review of any section of your graded homework after receiving your grades. Participation is purely voluntary, and opting out will not affect your grade in any way. For additional information, please contact the TAs via e-mail: pavlin.policar@fri.uni-lj.si and martin.spendl@fri.uni-lj.si.
+
+If you do not wish to participate in this study, please uncheck the box below (remove the `x` inside the square brackets):
+
+- [x] I consent to participate in the LLM grading study.
+
+Thank you for your contribution to this research!
 
 ## Submission and Grading
 
@@ -26,11 +36,11 @@ There are three types of exercises/answers within each homework:
 
     will not work and will receive zero points. All answer variables should be set explicitly e.g. `answer_var = 1.6666` in for this simple example. Please ensure there are no syntax errors in your notebook.
 
-We will automatically fetch your solutions at the deadline and these submissions will be graded by default. **If you submit after the deadline -- using your late days -- please notify Pavlin on our Slack channel**, and we will re-evaluate your submission.
+We will automatically fetch your solutions at the deadline and these submissions will be graded by default. **If you submit after the deadline -- using your late days -- please notify Pavlin or Martin via email**, and we will re-evaluate your submission.
 
 ## Environment instructions
 
-You will need Python 3.8 or higher. You will need to install `biopython` for accessing NCBI and `matplotlib` for plotting. You will also need `jupyterlab` to open and run the notebook. You will also need `numpy`, `scipy`, `pandas`, `scanpy`, `statsmodels` and `seaborn`. You can install everything necessary by running
+You will need Python 3.10 or higher. You will need to install `biopython` for accessing NCBI and `matplotlib` for plotting. You will also need `jupyterlab` to open and run the notebook. You will also need `numpy`, `scipy`, `pandas`, `scanpy`, `statsmodels` and `seaborn`. You can install everything necessary by running
 ```
 pip install biopython matplotlib jupyterlab pandas scanpy statsmodels scipy
 ```
