@@ -13,10 +13,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       
-      - name: Set up Python 3.9 environment
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.10 environment
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
       
       - name: Install Dependencies
         run: |
@@ -36,11 +36,18 @@ jobs:
         uses: ./homework-actions/action-explicit-variables
         with:
           args: >
-            num_cells num_genes
+            highest_cumulative_sum
+            faster_mapping
+            non_viral_material
+            non_viral_origin
+            num_cells
+            num_genes
             diff_expressed_genes
+            why_diff_expressed_genes
+            meaningful_diff_expression
             enriched_GO_term
             GO_term_comments
-            sc_analysis_extra_comments
+            tsne_clusters
         
       - name: Notebook and helper_functions files present
         uses: ./homework-actions/action-files-present
@@ -50,3 +57,18 @@ jobs:
 
       - name: Check Images visible
         uses: ./homework-actions/action-images-white
+      
+      - name: Check Images real SVG
+        uses: ./homework-actions/action-real-SVG-images
+      
+      - name: Images as SVGs
+        uses: ./homework-actions/action-stored-SVG
+        with:
+          args: >
+            realistic_gene_dict.svg
+            realistic_cell_dist.svg
+            volcano.svg
+            sc_analysis_pca.svg
+            sc_analysis_clusters.svg
+            sc_analysis_deg.svg
+            
